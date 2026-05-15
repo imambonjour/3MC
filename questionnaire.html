@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuesioner Minat Divisi | 3MC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .q-container {
+            max-width: 800px;
+            margin: 120px auto;
+            padding: 40px;
+            background: var(--secondary-bg);
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .q-step {
+            display: none;
+        }
+
+        .q-step.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .q-question {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+        }
+
+        .q-options {
+            display: grid;
+            gap: 15px;
+        }
+
+        .q-option {
+            padding: 20px;
+            background: var(--primary-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .q-option:hover {
+            border-color: var(--accent);
+            background: rgba(229, 9, 20, 0.05);
+        }
+
+        .q-option.selected {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: white;
+        }
+
+        .q-progress {
+            height: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .q-progress-bar {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        #results {
+            display: none;
+        }
+
+        .result-box {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 5px solid var(--accent);
+            color: #eee;
+            margin-top: 30px;
+            font-family: var(--font-main);
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="main-header">
+        <a href="index.html" class="logo">
+            <img src="src/assets/img/3mc_logo.png" alt="3MC Logo" class="logo-img">
+        </a>
+    </header>
+
+    <div class="q-container">
+        <div id="quiz">
+            <div class="q-progress">
+                <div class="q-progress-bar" id="progress"></div>
+            </div>
+            <div id="questions-container">
+                <!-- Questions will be injected here -->
+            </div>
+            <div class="btn-container">
+                <button class="btn" id="prev-btn" style="background: #333; display: none;">Sebelumnya</button>
+                <button class="btn" id="next-btn" style="margin-left: auto;">Lanjut</button>
+            </div>
+        </div>
+
+        <div id="results">
+            <h2 class="accent-text">Hasil Penempatan Kamu</h2>
+            <div class="result-box" id="result-content"></div>
+            <div class="btn-container">
+                <a href="https://example.com" target="_blank" class="btn">Daftar 3MC</a>
+                <a href="index.html" class="btn" style="background: #333;">Kembali ke Beranda</a>
+                <button class="btn" onclick="location.reload()" style="background: #333;">Ulangi Kuesioner</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "Saat menonton film, apa yang paling kamu perhatikan?", a: "Alur cerita", b: "Sudut pengambilan gambar", c: "Ekspresi pemain", d: "Cara promosi filmnya" },
+            { q: "Jika diberi tugas kelompok, kamu lebih suka...", a: "Menulis ide/naskah", b: "Mengatur alat dan teknis", c: "Tampil dan presentasi", d: "Mengelola dokumentasi/socmed" },
+            { q: "Hobi yang paling mendekati minatmu?", a: "Membaca/Menulis cerita", b: "Fotografi", c: "Teater/Drama", d: "Membuat podcast/Vlog" },
+            { q: "Elemen terpenting dalam video pendek?", a: "Pesan yang disampaikan", b: "Kualitas visual/lighting", c: "Akting pemeran", d: "Engagement penonton" },
+            { q: "Melihat pemandangan indah, kamu ingin...", a: "Memikirkan cerita tentangnya", b: "Memotret dengan angle terbaik", c: "Berpose di depannya", d: "Buat story IG dengan lagu pas" },
+            { q: "Kamu merasa paling percaya diri saat...", a: "Berimajinasi sendirian", b: "Mengoperasikan gadget", c: "Menjadi pusat perhatian", d: "Berinteraksi online" },
+            { q: "Peran paling keren dalam produksi?", a: "Penulis Naskah", b: "Cinematographer", c: "Aktor Utama", d: "Content Creator/Podcaster" },
+            { q: "Aplikasi yang paling sering dibuka?", a: "Wattpad/Notes", b: "Lightroom/VSCO", c: "TikTok (cari ref akting)", d: "Spotify (podcast)" },
+            { q: "Cara menyampaikan kritik?", a: "Lewat tulisan mendalam", b: "Lewat perbandingan visual", c: "Lewat ekspresi langsung", d: "Lewat diskusi terbuka" },
+            { q: "Di acara sekolah, kamu ingin menjadi...", a: "Tim konsep acara", b: "Tim dokumentasi", c: "MC/Pengisi acara", d: "Tim publikasi/broadcast" },
+            { q: "Kamu lebih suka bekerja...", a: "Dalam ketenangan", b: "Fokus detail teknis", c: "Energi tinggi & ekspresif", d: "Sesuai tren viral" },
+            { q: "Cita-citamu yang paling relevan?", a: "Penulis/Sutradara", b: "Videografer Profesional", c: "Pemain Film", d: "Broadcaster/Influencer" }
+        ];
+
+        let currentStep = 0;
+        let answers = [];
+
+        const container = document.getElementById('questions-container');
+        const progress = document.getElementById('progress');
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+
+        function initQuiz() {
+            questions.forEach((q, index) => {
+                const step = document.createElement('div');
+                step.className = `q-step ${index === 0 ? 'active' : ''}`;
+                step.innerHTML = `
+                    <div class="q-question">Q${index + 1}: ${q.q}</div>
+                    <div class="q-options">
+                        <div class="q-option" data-val="A"><span>A</span> ${q.a}</div>
+                        <div class="q-option" data-val="B"><span>B</span> ${q.b}</div>
+                        <div class="q-option" data-val="C"><span>C</span> ${q.c}</div>
+                        <div class="q-option" data-val="D"><span>D</span> ${q.d}</div>
+                    </div>
+                `;
+                container.appendChild(step);
+
+                step.querySelectorAll('.q-option').forEach(opt => {
+                    opt.onclick = () => {
+                        step.querySelectorAll('.q-option').forEach(o => o.classList.remove('selected'));
+                        opt.classList.add('selected');
+                        answers[index] = opt.dataset.val;
+                    };
+                });
+            });
+            updateProgress();
+        }
+
+        function updateProgress() {
+            progress.style.width = `${((currentStep + 1) / questions.length) * 100}%`;
+            prevBtn.style.display = currentStep === 0 ? 'none' : 'block';
+            nextBtn.innerText = currentStep === questions.length - 1 ? 'Lihat Hasil' : 'Lanjut';
+        }
+
+        nextBtn.onclick = () => {
+            if (!answers[currentStep]) {
+                alert("Pilih satu jawaban!");
+                return;
+            }
+            if (currentStep < questions.length - 1) {
+                document.querySelectorAll('.q-step')[currentStep].classList.remove('active');
+                currentStep++;
+                document.querySelectorAll('.q-step')[currentStep].classList.add('active');
+                updateProgress();
+            } else {
+                showResults();
+            }
+        };
+
+        prevBtn.onclick = () => {
+            document.querySelectorAll('.q-step')[currentStep].classList.remove('active');
+            currentStep--;
+            document.querySelectorAll('.q-step')[currentStep].classList.add('active');
+            updateProgress();
+        };
+
+        function showResults() {
+            const counts = { A: 0, B: 0, C: 0, D: 0 };
+            answers.forEach(a => counts[a]++);
+
+            const mapping = { A: "Skenario", B: "Kamera", C: "Akting", D: "Broadcast" };
+            const sorted = Object.entries(counts).sort((x, y) => y[1] - x[1]);
+
+            const primary = sorted[0];
+            const secondary = sorted[1];
+            const gap = primary[1] - secondary[1];
+
+            let status = "Jelas";
+            if (gap <= 1) status = "Hybrid";
+            if (sorted.every(s => Math.abs(s[1] - sorted[0][1]) <= 1)) status = "Eksplorasi";
+            if (sorted.every(s => s[1] <= 4)) status = "Perlu Diskusi";
+
+            let feedback = "";
+            if (status === "Jelas") {
+                feedback = `Kamu memiliki minat yang sangat spesifik di bidang ${mapping[primary[0]]} (${primary[0]}=${primary[1]}). Fokuslah mengembangkan skill teknis dan kreatif di divisi ini.`;
+            } else if (status === "Hybrid") {
+                feedback = `Kamu memiliki bakat gabungan antara ${mapping[primary[0]]} (${primary[0]}=${primary[1]}) dan ${mapping[secondary[0]]} (${secondary[0]}=${secondary[1]}). Peran kolaboratif sangat cocok untukmu.`;
+            } else {
+                feedback = `Kamu memiliki minat yang luas. Cobalah melakukan orientasi di beberapa divisi untuk menemukan mana yang paling membuatmu nyaman.`;
+            }
+
+            const htmlContent = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 10px;">Divisi Utama Kamu: <span class="accent-text">${mapping[primary[0]]}</span></h3>
+                    <p style="font-size: 1.1rem; color: #ccc;">Status Penempatan: <strong>${status}</strong></p>
+                </div>
+                
+                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 20px;">
+                    ${feedback} Kamu dominan di <strong>${mapping[primary[0]]}</strong>, tapi potensi di <strong>${mapping[secondary[0]]}</strong> juga menarik untuk dieksplorasi dalam konteks produksi film di sekolah.
+                </p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px;">
+                    <div><strong>Skenario (A):</strong> ${counts.A}</div>
+                    <div><strong>Kamera (B):</strong> ${counts.B}</div>
+                    <div><strong>Akting (C):</strong> ${counts.C}</div>
+                    <div><strong>Broadcast (D):</strong> ${counts.D}</div>
+                </div>
+
+                <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; font-size: 0.9rem;">
+                    <strong>Catatan & Langkah Selanjutnya:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px; color: #bbb;">
+                        <li>Masa trial 2-3 minggu di divisi rekomendasi.</li>
+                        <li>Opsi rotasi divisi tiap semester.</li>
+                        <li>Hasil ini hanya preferensi awal, bisa didiskusikan lebih lanjut.</li>
+                    </ul>
+                </div>
+            `;
+
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('result-content').innerHTML = htmlContent;
+        }
+
+        initQuiz();
+    </script>
+</body>
+
+</html>

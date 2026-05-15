@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3MC | Mandapa Movie Maker Community</title>
+    <meta name="description"
+        content="Official website for 3MC (Mandapa Movie Maker Community) - High School Film Extracurricular.">
+    <link rel="icon" type="image/png" href="src/assets/img/3mc_logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Placeholder for icons -->
+</head>
+
+<body>
+    <header id="main-header">
+        <a href="#" class="logo">
+            <img src="src/assets/img/3mc_logo.png" alt="3MC Logo" class="logo-img">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#hero">Beranda</a></li>
+                <li><a href="#films">Film</a></li>
+                <li><a href="#divisions">Divisi</a></li>
+                <li><a href="#about">Tentang Kami</a></li>
+                <li><a href="#contact">Kontak</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1>CRAFTING <span class="accent-text">CINEMATIC</span> STORIES</h1>
+            <p>Mandapa Movie Maker Community. Tempat berkumpulnya para pembuat film muda untuk berkarya dan berinovasi.
+            </p>
+            <a href="https://example.com/" class="btn">bergabung dengan kami</a>
+        </div>
+    </section>
+
+    <section id="films" class="films-section">
+        <div class="section-title">
+            <h2>Film <span class="accent-text">Terbaru</span></h2>
+            <p>Geser untuk melihat koleksi kami</p>
+        </div>
+
+        <div class="slider-container" id="film-slider">
+            <!-- Film Card 1 -->
+            <div class="film-card" onclick="window.open('https://youtube.com', '_blank')">
+                <img src="./src/assets/img/Poster/Berlaci_Kata.JPEG" alt="Berlaci Kata">
+                <div class="film-info">
+                    <h3>Berlaci Kata</h3>
+                    <p>Drama | 2025</p>
+                </div>
+            </div>
+
+            <!-- Film Card 2 -->
+            <div class="film-card" onclick="window.open('https://www.youtube.com/watch?v=n7pUIWqkueE')">
+                <img src="/home/normies/.gemini/antigravity/brain/3924fb12-28b1-4868-823f-33d1686792b8/film_poster_2_1778778555341.png"
+                    alt="Adik">
+                <div class="film-info">
+                    <h3>ADIK</h3>
+                    <p>Thriller | 2024</p>
+                </div>
+            </div>
+
+            <!-- Film Card 3 -->
+            <div class="film-card" onclick="window.open('https://www.youtube.com/watch?v=ncxSWUT8FLQ')">
+                <img src="/home/normies/.gemini/antigravity/brain/3924fb12-28b1-4868-823f-33d1686792b8/film_poster_3_1778778612356.png"
+                    alt="Film Gema">
+                <div class="film-info">
+                    <h3>SANUBARI</h3>
+                    <p>Action | 2023</p>
+                </div>
+            </div>
+
+            <!-- View More Card -->
+            <div class="film-card more-card" onclick="window.open('https://www.youtube.com/@crew3mc776', '_blank')">
+                <div class="more-content">
+                    <i class="fas fa-chevron-right"></i>
+                    <p>Lihat Film Lainnya</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="divisions" class="divisions-section">
+        <div class="section-title">
+            <h2>Divisi <span class="accent-text">Kami</span></h2>
+            <p>Berbagai peran untuk mewujudkan karya sinematik</p>
+        </div>
+
+        <div class="divisions-grid">
+            <div class="division-card">
+                <div class="division-icon"><i class="fas fa-camera"></i></div>
+                <h3>Kamera</h3>
+                <p>Bertanggung jawab atas visual karya kami. Tidak hanya saat syuting film, tim kamera juga aktif
+                    mendokumentasikan event sekolah dan menjadi media partner acara luar.</p>
+            </div>
+
+            <div class="division-card">
+                <div class="division-icon"><i class="fas fa-pen-nib"></i></div>
+                <h3>Skenario</h3>
+                <p>Otak di balik setiap cerita. Merancang plot, dialog, dan naskah yang emosional serta bermakna untuk
+                    diangkat ke layar lebar.</p>
+            </div>
+
+            <div class="division-card">
+                <div class="division-icon"><i class="fas fa-theater-masks"></i></div>
+                <h3>Akting</h3>
+                <p>Wajah dari setiap karya. Mengolah rasa dan ekspresi untuk menghidupkan karakter-karakter dalam naskah
+                    dengan performa yang memukau.</p>
+            </div>
+
+            <div class="division-card">
+                <div class="division-icon"><i class="fas fa-broadcast-tower"></i></div>
+                <h3>Broadcast</h3>
+                <p>Menghubungkan kami dengan dunia digital. Fokus pada pembuatan konten kreatif seperti podcast, konten
+                    sosial media (Reels/TikTok), dan publikasi.</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 60px;">
+            <p style="margin-bottom: 20px; color: var(--text-gray);">Bingung memilih divisi yang mana?</p>
+            <a href="questionnaire.html" class="btn">Temukan Divisimu Melalui Kuesioner</a>
+        </div>
+    </section>
+
+    <section id="about" style="padding: 100px 10%; background-color: #111;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <h2 style="margin-bottom: 30px;">Tentang <span class="accent-text">3MC</span></h2>
+            <p style="color: #ccc; font-size: 1.1rem; line-height: 1.8;">
+                Mandapa Movie Maker Community adalah ekstrakurikuler film yang berdedikasi untuk mengembangkan bakat
+                siswa dalam seni sinematografi. Kami percaya bahwa setiap cerita layak untuk diceritakan dengan cara
+                yang indah.
+            </p>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="logo-footer">
+                <img src="src/assets/img/3mc_logo.png" alt="3MC Logo" class="logo-img">
+            </div>
+            <div class="social-links">
+                <a href="https://www.instagram.com/crew3mc/" target="_blank" class="social-btn"><i
+                        class="fa-brands fa-instagram"></i> Instagram</a>
+                <a href="https://www.youtube.com/@crew3mc776" target="_blank" class="social-btn"><i
+                        class="fa-brands fa-youtube"></i> YouTube</a>
+                <a href="https://www.tiktok.com/@crew3mc" target="_blank" class="social-btn"><i
+                        class="fa-brands fa-tiktok"></i> TikTok</a>
+                <a href="https://wa.me/6289505237799?text=Halo%20Ayesha%2C%20saya%20ingin%20bertanya%20tentang%203MC"
+                    target="_blank" class="social-btn whatsapp-btn"><i class="fa-brands fa-whatsapp"></i> Chat Ketua
+                    (Ayesha)</a>
+            </div>
+            <p class="copyright">&copy; 2026 Mandapa Movie Maker Community. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
