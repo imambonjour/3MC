@@ -98,7 +98,6 @@
             background: #1a1a1a;
             padding: 30px;
             border-radius: 12px;
-            border-left: 5px solid var(--accent);
             color: #eee;
             margin-top: 30px;
             font-family: var(--font-main);
@@ -106,8 +105,29 @@
 
         .btn-container {
             display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
             justify-content: space-between;
             margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .btn-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .btn-container .btn {
+                width: 100%;
+                text-align: center;
+                margin-left: 0 !important;
+            }
+            .q-container {
+                margin: 80px 20px 40px 20px;
+                padding: 25px 15px;
+            }
+            .q-question {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -137,7 +157,7 @@
             <h2 class="accent-text">Hasil Penempatan Kamu</h2>
             <div class="result-box" id="result-content"></div>
             <div class="btn-container">
-                <a href="https://example.com" target="_blank" class="btn">Daftar 3MC</a>
+                <a href="https://wa.me/6289505237799" target="_blank" class="btn" id="daftar-btn">Daftar 3MC</a>
                 <a href="index.html" class="btn" style="background: #333;">Kembali ke Beranda</a>
                 <button class="btn" onclick="location.reload()" style="background: #333;">Ulangi Kuesioner</button>
             </div>
@@ -279,6 +299,9 @@
             document.getElementById('quiz').style.display = 'none';
             document.getElementById('results').style.display = 'block';
             document.getElementById('result-content').innerHTML = htmlContent;
+
+            const message = `Halo kak Ayesha, saya telah mengisi kuesioner dan direkomendasikan masuk divisi ${mapping[primary[0]]}. Saya ingin mendaftar ke 3MC!`;
+            document.getElementById('daftar-btn').href = `https://wa.me/6289505237799?text=${encodeURIComponent(message)}`;
         }
 
         initQuiz();
