@@ -407,4 +407,33 @@ footer {
   nav ul li a {
     font-size: 1.2rem;
   }
+
+  .divisions-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 20px;
+    gap: 15px;
+  }
+
+  .divisions-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .division-card {
+    width: 260px;
+    min-width: 260px;
+    aspect-ratio: 1 / 1;
+    scroll-snap-align: center;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    white-space: normal;
+  }
 }
