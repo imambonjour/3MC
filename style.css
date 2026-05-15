@@ -106,7 +106,7 @@ nav ul li a:hover {
   justify-content: center;
   align-items: flex-start;
   padding: 0 10%;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('src/assets/img/head.png') center/cover no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('src/assets/img/head.webp') center/cover no-repeat;
   position: relative;
 }
 
