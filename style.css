@@ -59,7 +59,7 @@ header.scrolled {
 }
 
 .logo-img {
-  height: 100px; /* Increased from 50px */
+  height: 60px; /* Reduced from 100px */
   width: auto;
   transition: var(--transition);
 }
@@ -84,6 +84,14 @@ nav ul li a {
 
 nav ul li a:hover {
   color: var(--accent);
+}
+
+.mobile-menu-btn {
+  display: none;
+  font-size: 1.5rem;
+  color: var(--text-white);
+  cursor: pointer;
+  z-index: 1001;
 }
 
 /* Hero Section */
@@ -304,7 +312,7 @@ footer {
 }
 
 .logo-footer .logo-img {
-  height: 120px; /* Increased from 60px */
+  height: 80px; /* Reduced from 120px */
 }
 
 .social-links {
@@ -365,5 +373,38 @@ footer {
   .film-card {
     min-width: 250px;
     height: 375px;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+  
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 70%;
+    height: 100vh;
+    background-color: var(--secondary-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: right 0.3s ease;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+  }
+
+  .nav-menu.active {
+    right: 0;
+  }
+
+  nav ul {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+  }
+
+  nav ul li a {
+    font-size: 1.2rem;
   }
 }
