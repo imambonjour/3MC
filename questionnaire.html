@@ -146,18 +146,18 @@
 
     <script>
         const questions = [
-            { q: "Saat menonton film, apa yang paling kamu perhatikan?", a: "Alur cerita", b: "Sudut pengambilan gambar", c: "Ekspresi pemain", d: "Cara promosi filmnya" },
-            { q: "Jika diberi tugas kelompok, kamu lebih suka...", a: "Menulis ide/naskah", b: "Mengatur alat dan teknis", c: "Tampil dan presentasi", d: "Mengelola dokumentasi/socmed" },
-            { q: "Hobi yang paling mendekati minatmu?", a: "Membaca/Menulis cerita", b: "Fotografi", c: "Teater/Drama", d: "Membuat podcast/Vlog" },
-            { q: "Elemen terpenting dalam video pendek?", a: "Pesan yang disampaikan", b: "Kualitas visual/lighting", c: "Akting pemeran", d: "Engagement penonton" },
-            { q: "Melihat pemandangan indah, kamu ingin...", a: "Memikirkan cerita tentangnya", b: "Memotret dengan angle terbaik", c: "Berpose di depannya", d: "Buat story IG dengan lagu pas" },
-            { q: "Kamu merasa paling percaya diri saat...", a: "Berimajinasi sendirian", b: "Mengoperasikan gadget", c: "Menjadi pusat perhatian", d: "Berinteraksi online" },
-            { q: "Peran paling keren dalam produksi?", a: "Penulis Naskah", b: "Cinematographer", c: "Aktor Utama", d: "Content Creator/Podcaster" },
-            { q: "Aplikasi yang paling sering dibuka?", a: "Wattpad/Notes", b: "Lightroom/VSCO", c: "TikTok (cari ref akting)", d: "Spotify (podcast)" },
-            { q: "Cara menyampaikan kritik?", a: "Lewat tulisan mendalam", b: "Lewat perbandingan visual", c: "Lewat ekspresi langsung", d: "Lewat diskusi terbuka" },
-            { q: "Di acara sekolah, kamu ingin menjadi...", a: "Tim konsep acara", b: "Tim dokumentasi", c: "MC/Pengisi acara", d: "Tim publikasi/broadcast" },
-            { q: "Kamu lebih suka bekerja...", a: "Dalam ketenangan", b: "Fokus detail teknis", c: "Energi tinggi & ekspresif", d: "Sesuai tren viral" },
-            { q: "Cita-citamu yang paling relevan?", a: "Penulis/Sutradara", b: "Videografer Profesional", c: "Pemain Film", d: "Broadcaster/Influencer" }
+            { q: "Saat menonton film, apa yang paling kamu perhatikan?", a: "Alur cerita", b: "Sudut pengambilan gambar", c: "Ekspresi pemain", d: "Cara promosi filmnya", e: "Transisi dan efek visual" },
+            { q: "Jika diberi tugas kelompok, kamu lebih suka...", a: "Menulis ide/naskah", b: "Mengatur alat dan teknis", c: "Tampil dan presentasi", d: "Mengelola dokumentasi/socmed", e: "Menyatukan dan merapikan hasil kerja" },
+            { q: "Hobi yang paling mendekati minatmu?", a: "Membaca/Menulis cerita", b: "Fotografi", c: "Teater/Drama", d: "Membuat podcast/Vlog", e: "Mengedit video/foto" },
+            { q: "Elemen terpenting dalam video pendek?", a: "Pesan yang disampaikan", b: "Kualitas visual/lighting", c: "Akting pemeran", d: "Engagement penonton", e: "Potongan adegan yang mulus" },
+            { q: "Melihat pemandangan indah, kamu ingin...", a: "Memikirkan cerita tentangnya", b: "Memotret dengan angle terbaik", c: "Berpose di depannya", d: "Buat story IG dengan lagu pas", e: "Merekam untuk bahan editan cinematic" },
+            { q: "Kamu merasa paling percaya diri saat...", a: "Berimajinasi sendirian", b: "Mengoperasikan gadget", c: "Menjadi pusat perhatian", d: "Berinteraksi online", e: "Bekerja di depan layar komputer" },
+            { q: "Peran paling keren dalam produksi?", a: "Penulis Naskah", b: "Cinematographer", c: "Aktor Utama", d: "Content Creator/Podcaster", e: "Video Editor" },
+            { q: "Aplikasi yang paling sering dibuka?", a: "Wattpad/Notes", b: "Lightroom/VSCO", c: "TikTok (cari ref akting)", d: "Spotify (podcast)", e: "CapCut/Premiere/After Effects" },
+            { q: "Cara menyampaikan kritik?", a: "Lewat tulisan mendalam", b: "Lewat perbandingan visual", c: "Lewat ekspresi langsung", d: "Lewat diskusi terbuka", e: "Lewat revisi hasil akhir" },
+            { q: "Di acara sekolah, kamu ingin menjadi...", a: "Tim konsep acara", b: "Tim dokumentasi", c: "MC/Pengisi acara", d: "Tim publikasi/broadcast", e: "Tim pasca-produksi video" },
+            { q: "Kamu lebih suka bekerja...", a: "Dalam ketenangan", b: "Fokus detail teknis", c: "Energi tinggi & ekspresif", d: "Sesuai tren viral", e: "Sendiri dengan earphone menyala" },
+            { q: "Cita-citamu yang paling relevan?", a: "Penulis/Sutradara", b: "Videografer Profesional", c: "Pemain Film", d: "Broadcaster/Influencer", e: "Editor Profesional" }
         ];
 
         let currentStep = 0;
@@ -179,6 +179,7 @@
                         <div class="q-option" data-val="B"><span>B</span> ${q.b}</div>
                         <div class="q-option" data-val="C"><span>C</span> ${q.c}</div>
                         <div class="q-option" data-val="D"><span>D</span> ${q.d}</div>
+                        <div class="q-option" data-val="E"><span>E</span> ${q.e}</div>
                     </div>
                 `;
                 container.appendChild(step);
@@ -223,10 +224,10 @@
         };
 
         function showResults() {
-            const counts = { A: 0, B: 0, C: 0, D: 0 };
+            const counts = { A: 0, B: 0, C: 0, D: 0, E: 0 };
             answers.forEach(a => counts[a]++);
 
-            const mapping = { A: "Skenario", B: "Kamera", C: "Akting", D: "Broadcast" };
+            const mapping = { A: "Skenario", B: "Kamera", C: "Akting", D: "Broadcast", E: "Editing" };
             const sorted = Object.entries(counts).sort((x, y) => y[1] - x[1]);
 
             const primary = sorted[0];
@@ -262,6 +263,7 @@
                     <div><strong>Kamera (B):</strong> ${counts.B}</div>
                     <div><strong>Akting (C):</strong> ${counts.C}</div>
                     <div><strong>Broadcast (D):</strong> ${counts.D}</div>
+                    <div><strong>Editing (E):</strong> ${counts.E}</div>
                 </div>
 
                 <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; font-size: 0.9rem;">
