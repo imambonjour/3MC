@@ -224,9 +224,14 @@
                 window.tracker.trackQuestionnaireStart();
             }
             
-            // Show first question step
-            nameStep.classList.remove('active');
-            document.querySelectorAll('.q-step')[0].classList.add('active');
+            // Hide name step
+            nameStep.style.display = 'none';
+            
+            // Show first question step from questions-container
+            const firstQuestion = container.querySelector('.q-step');
+            if (firstQuestion) {
+                firstQuestion.classList.add('active');
+            }
             
             // Show navigation buttons
             nextBtn.style.display = 'block';
@@ -272,9 +277,10 @@
                 return;
             }
             if (currentStep < questions.length - 1) {
-                document.querySelectorAll('.q-step')[currentStep].classList.remove('active');
+                const steps = container.querySelectorAll('.q-step');
+                steps[currentStep].classList.remove('active');
                 currentStep++;
-                document.querySelectorAll('.q-step')[currentStep].classList.add('active');
+                steps[currentStep].classList.add('active');
                 updateProgress();
             } else {
                 showResults();
@@ -282,9 +288,10 @@
         };
 
         prevBtn.onclick = () => {
-            document.querySelectorAll('.q-step')[currentStep].classList.remove('active');
+            const steps = container.querySelectorAll('.q-step');
+            steps[currentStep].classList.remove('active');
             currentStep--;
-            document.querySelectorAll('.q-step')[currentStep].classList.add('active');
+            steps[currentStep].classList.add('active');
             updateProgress();
         };
 
