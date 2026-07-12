@@ -111,6 +111,41 @@
             margin-top: 40px;
         }
 
+        /* Name input step */
+        .name-step-label {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .name-step-sub {
+            font-size: 0.95rem;
+            color: #aaa;
+            margin-bottom: 25px;
+        }
+
+        .name-input {
+            width: 100%;
+            padding: 18px 20px;
+            background: var(--primary-bg);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            color: #fff;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.25s ease;
+            box-sizing: border-box;
+        }
+
+        .name-input:focus {
+            border-color: var(--accent);
+        }
+
+        .name-input::placeholder {
+            color: #555;
+        }
+
         @media (max-width: 768px) {
             .btn-container {
                 flex-direction: column;
@@ -144,6 +179,21 @@
             <div class="q-progress">
                 <div class="q-progress-bar" id="progress"></div>
             </div>
+
+            <!-- Name input step -->
+            <div class="q-step active" id="name-step">
+                <div class="name-step-label">Halo! Siapa namamu? 👋</div>
+                <div class="name-step-sub">Masukkan nama kamu sebelum memulai kuesioner.</div>
+                <input
+                    type="text"
+                    id="nama-input"
+                    class="name-input"
+                    placeholder="Nama lengkap kamu..."
+                    maxlength="80"
+                    autocomplete="name"
+                />
+            </div>
+
             <div id="questions-container">
                 <!-- Questions will be injected here -->
             </div>
@@ -180,18 +230,27 @@
             { q: "Cita-citamu yang paling relevan?", a: "Penulis/Sutradara", b: "Videografer Profesional", c: "Pemain Film", d: "Broadcaster/Influencer", e: "Editor Profesional" }
         ];
 
-        let currentStep = 0;
+        // currentStep: -1 = name step, 0..N-1 = questions
+        let currentStep = -1;
         let answers = [];
+        let userName = '';
 
         const container = document.getElementById('questions-container');
         const progress = document.getElementById('progress');
         const nextBtn = document.getElementById('next-btn');
         const prevBtn = document.getElementById('prev-btn');
+        const nameStep = document.getElementById('name-step');
+        const namaInput = document.getElementById('nama-input');
+
+        // Allow pressing Enter on name field to advance
+        namaInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') nextBtn.click();
+        });
 
         function initQuiz() {
             questions.forEach((q, index) => {
                 const step = document.createElement('div');
-                step.className = `q-step ${index === 0 ? 'active' : ''}`;
+                step.className = 'q-step';
                 step.innerHTML = `
                     <div class="q-question">Q${index + 1}: ${q.q}</div>
                     <div class="q-options">
@@ -215,21 +274,47 @@
             updateProgress();
         }
 
+        // Total steps = 1 (name) + questions.length
         function updateProgress() {
-            progress.style.width = `${((currentStep + 1) / questions.length) * 100}%`;
-            prevBtn.style.display = currentStep === 0 ? 'none' : 'block';
+            const totalSteps = questions.length + 1;
+            const stepNumber = currentStep + 2; // name step = step 1
+            progress.style.width = `${(stepNumber / totalSteps) * 100}%`;
+            prevBtn.style.display = currentStep === -1 ? 'none' : 'block';
             nextBtn.innerText = currentStep === questions.length - 1 ? 'Lihat Hasil' : 'Lanjut';
         }
 
+        function getAllSteps() {
+            return document.querySelectorAll('#questions-container .q-step');
+        }
+
         nextBtn.onclick = () => {
+            if (currentStep === -1) {
+                // Validate name
+                const val = namaInput.value.trim();
+                if (!val) {
+                    namaInput.style.borderColor = 'var(--accent)';
+                    namaInput.focus();
+                    namaInput.placeholder = 'Nama tidak boleh kosong!';
+                    return;
+                }
+                userName = val;
+                nameStep.classList.remove('active');
+                currentStep = 0;
+                getAllSteps()[0].classList.add('active');
+                updateProgress();
+                // Tracker: record nama (result still unknown)
+                if (window.TrackerUpdateNama) window.TrackerUpdateNama(userName, null);
+                return;
+            }
+
             if (!answers[currentStep]) {
                 alert("Pilih satu jawaban!");
                 return;
             }
             if (currentStep < questions.length - 1) {
-                document.querySelectorAll('.q-step')[currentStep].classList.remove('active');
+                getAllSteps()[currentStep].classList.remove('active');
                 currentStep++;
-                document.querySelectorAll('.q-step')[currentStep].classList.add('active');
+                getAllSteps()[currentStep].classList.add('active');
                 updateProgress();
             } else {
                 showResults();
@@ -237,9 +322,16 @@
         };
 
         prevBtn.onclick = () => {
-            document.querySelectorAll('.q-step')[currentStep].classList.remove('active');
+            if (currentStep === 0) {
+                getAllSteps()[0].classList.remove('active');
+                currentStep = -1;
+                nameStep.classList.add('active');
+                updateProgress();
+                return;
+            }
+            getAllSteps()[currentStep].classList.remove('active');
             currentStep--;
-            document.querySelectorAll('.q-step')[currentStep].classList.add('active');
+            getAllSteps()[currentStep].classList.add('active');
             updateProgress();
         };
 
@@ -300,12 +392,19 @@
             document.getElementById('results').style.display = 'block';
             document.getElementById('result-content').innerHTML = htmlContent;
 
-            const message = `Halo kak Ayesha, saya telah mengisi kuesioner dan direkomendasikan masuk divisi ${mapping[primary[0]]}. Saya ingin mendaftar ke 3MC!`;
+            const message = `Halo kak Ayesha, saya ${userName} telah mengisi kuesioner dan direkomendasikan masuk divisi ${mapping[primary[0]]}. Saya ingin mendaftar ke 3MC!`;
             document.getElementById('daftar-btn').href = `https://wa.me/6289505237799?text=${encodeURIComponent(message)}`;
+
+            // Tracker: record final nama + questionnaire result
+            if (window.TrackerUpdateNama) window.TrackerUpdateNama(userName, mapping[primary[0]]);
         }
 
         initQuiz();
     </script>
+
+    <!-- Visitor Tracker -->
+    <script src="src/supabase-config.js"></script>
+    <script src="src/tracker.js"></script>
 </body>
 
 </html>
