@@ -144,6 +144,16 @@
             <div class="q-progress">
                 <div class="q-progress-bar" id="progress"></div>
             </div>
+            
+            <!-- Name Input Step -->
+            <div class="q-step" id="name-step">
+                <div class="q-question">Sebelum mulai, siapa namamu?</div>
+                <input type="text" id="user-name" placeholder="Masukkan namamu" style="width: 100%; padding: 15px; background: var(--primary-bg); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white; font-size: 1rem; font-family: var(--font-main); margin-bottom: 20px;">
+                <div class="btn-container">
+                    <button class="btn" id="start-btn">Mulai Kuesioner</button>
+                </div>
+            </div>
+            
             <div id="questions-container">
                 <!-- Questions will be injected here -->
             </div>
@@ -164,6 +174,7 @@
         </div>
     </div>
 
+    <script src="tracker.js"></script>
     <script>
         const questions = [
             { q: "Saat menonton film, apa yang paling kamu perhatikan?", a: "Alur cerita", b: "Sudut pengambilan gambar", c: "Ekspresi pemain", d: "Cara promosi filmnya", e: "Transisi dan efek visual" },
@@ -182,11 +193,42 @@
 
         let currentStep = 0;
         let answers = [];
+        let userName = '';
 
         const container = document.getElementById('questions-container');
         const progress = document.getElementById('progress');
         const nextBtn = document.getElementById('next-btn');
         const prevBtn = document.getElementById('prev-btn');
+        const nameStep = document.getElementById('name-step');
+        const startBtn = document.getElementById('start-btn');
+        const nameInput = document.getElementById('user-name');
+
+        // Hide question nav initially
+        nextBtn.style.display = 'none';
+        prevBtn.style.display = 'none';
+
+        // Start button handler
+        startBtn.addEventListener('click', () => {
+            const name = nameInput.value.trim();
+            if (!name) {
+                alert("Masukkan namamu terlebih dahulu!");
+                return;
+            }
+            userName = name;
+            
+            // Track questionnaire start
+            if (window.tracker && typeof window.tracker.trackQuestionnaireStart === 'function') {
+                window.tracker.trackQuestionnaireStart();
+            }
+            
+            // Show first question step
+            nameStep.classList.remove('active');
+            document.querySelectorAll('.q-step')[0].classList.add('active');
+            
+            // Show navigation buttons
+            nextBtn.style.display = 'block';
+            updateProgress();
+        });
 
         function initQuiz() {
             questions.forEach((q, index) => {
@@ -302,6 +344,15 @@
 
             const message = `Halo kak Ayesha, saya telah mengisi kuesioner dan direkomendasikan masuk divisi ${mapping[primary[0]]}. Saya ingin mendaftar ke 3MC!`;
             document.getElementById('daftar-btn').href = `https://wa.me/6289505237799?text=${encodeURIComponent(message)}`;
+
+            // Send to Supabase
+            if (window.tracker && typeof window.tracker.trackQuestionnaireCompleted === 'function') {
+                const divisionResult = {
+                    primary: mapping[primary[0]],
+                    secondary: mapping[secondary[0]]
+                };
+                window.tracker.trackQuestionnaireCompleted(userName, divisionResult, status, counts, answers);
+            }
         }
 
         initQuiz();
