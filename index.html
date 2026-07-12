@@ -41,7 +41,7 @@
             <p>Mandapa Movie Maker Community. Tempat berkumpulnya para sineas muda untuk berkarya dan berinovasi.
             </p>
             <a href="https://wa.me/6289505237799?text=Halo%20kak%20Ayesha%2C%20saya%20ingin%20masuk%203MC"
-                class="btn">bergabung dengan kami</a>
+                class="btn" data-track="whatsapp-hero">bergabung dengan kami</a>
         </div>
     </section>
 
@@ -153,22 +153,27 @@
                 <img src="src/assets/img/3mc_logo.png" alt="3MC Logo" class="logo-img">
             </div>
             <div class="social-links">
-                <a href="https://www.instagram.com/crew3mc/" target="_blank" class="social-btn"><i
+                <a href="https://www.instagram.com/crew3mc/" target="_blank" class="social-btn" data-track="external"><i
                         class="fa-brands fa-instagram"></i> Instagram</a>
-                <a href="https://www.youtube.com/@crew3mc776" target="_blank" class="social-btn"><i
+                <a href="https://www.youtube.com/@crew3mc776" target="_blank" class="social-btn" data-track="external"><i
                         class="fa-brands fa-youtube"></i> YouTube</a>
-                <a href="https://www.tiktok.com/@crew3mc" target="_blank" class="social-btn"><i
+                <a href="https://www.tiktok.com/@crew3mc" target="_blank" class="social-btn" data-track="external"><i
                         class="fa-brands fa-tiktok"></i> TikTok</a>
                 <a href="https://open.spotify.com/show/4tB7wmDdBuKusb8qtDBaEs?si=f5f07d9558dc4362" target="_blank"
-                    class="social-btn"><i class="fa-brands fa-spotify"></i> Spotify</a>
+                    class="social-btn" data-track="external"><i class="fa-brands fa-spotify"></i> Spotify</a>
                 <a href="https://wa.me/6289505237799?text=Halo%20Ayesha%2C%20saya%20ingin%20bertanya%20tentang%203MC"
-                    target="_blank" class="social-btn whatsapp-btn"><i class="fa-brands fa-whatsapp"></i> Chat Ketua
+                    target="_blank" class="social-btn whatsapp-btn" data-track="whatsapp-footer"><i class="fa-brands fa-whatsapp"></i> Chat Ketua
                     (Ayesha)</a>
             </div>
             <p class="copyright">&copy; 2026 Mandapa Movie Maker Community. All rights reserved.</p>
         </div>
     </footer>
 
+    <!-- Supabase Library (Required for Tracker) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Tracker Script -->
+    <script src="tracker.js"></script>
     <script src="main.js"></script>
 </body>
 
