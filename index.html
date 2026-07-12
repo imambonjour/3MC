@@ -169,41 +169,11 @@
         </div>
     </footer>
 
+    <!-- Supabase Library (Required for Tracker) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <!-- Tracker Script -->
     <script src="tracker.js"></script>
-    <script>
-        // Track film card clicks
-        document.querySelectorAll('.film-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const title = this.querySelector('h3')?.textContent || 'Unknown';
-                const year = this.querySelector('p')?.textContent?.split('|')[1]?.trim() || 'Unknown';
-                if (window.tracker && typeof window.tracker.trackFilmCardClick === 'function') {
-                    window.tracker.trackFilmCardClick(title, year);
-                }
-            });
-        });
-
-        // Track WhatsApp clicks
-        document.querySelectorAll('[data-track="whatsapp-hero"], [data-track="whatsapp-footer"]').forEach(link => {
-            link.addEventListener('click', function() {
-                const source = this.dataset.track.replace('whatsapp-', '');
-                if (window.tracker && typeof window.tracker.trackWhatsAppClick === 'function') {
-                    window.tracker.trackWhatsAppClick(source);
-                }
-            });
-        });
-
-        // Track external link clicks
-        document.querySelectorAll('[data-track="external"]').forEach(link => {
-            link.addEventListener('click', function() {
-                const url = this.href;
-                const text = this.textContent.trim();
-                if (window.tracker && typeof window.tracker.trackExternalLinkClick === 'function') {
-                    window.tracker.trackExternalLinkClick(url, text);
-                }
-            });
-        });
-    </script>
     <script src="main.js"></script>
 </body>
 

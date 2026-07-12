@@ -174,6 +174,9 @@
         </div>
     </div>
 
+    <!-- Supabase Library (Required for Tracker) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <script src="tracker.js"></script>
     <script>
         const questions = [
@@ -345,13 +348,9 @@
             const message = `Halo kak Ayesha, saya telah mengisi kuesioner dan direkomendasikan masuk divisi ${mapping[primary[0]]}. Saya ingin mendaftar ke 3MC!`;
             document.getElementById('daftar-btn').href = `https://wa.me/6289505237799?text=${encodeURIComponent(message)}`;
 
-            // Send to Supabase
-            if (window.tracker && typeof window.tracker.trackQuestionnaireCompleted === 'function') {
-                const divisionResult = {
-                    primary: mapping[primary[0]],
-                    secondary: mapping[secondary[0]]
-                };
-                window.tracker.trackQuestionnaireCompleted(userName, divisionResult, status, counts, answers);
+            // Send to Supabase using new tracker function
+            if (typeof window.trackQuestionnaireSubmit === 'function') {
+                window.trackQuestionnaireSubmit();
             }
         }
 

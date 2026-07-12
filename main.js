@@ -106,3 +106,36 @@ if (mobileBtn && navMenu) {
     });
   });
 }
+
+// --- TRACKING INTEGRATION ---
+// Track Film Card Clicks
+document.querySelectorAll('.film-card, .poster-item').forEach(card => {
+  card.addEventListener('click', function() {
+    if (typeof window.trackEvent === 'function') {
+      const title = this.getAttribute('data-title') || this.querySelector('h3')?.innerText || 'Unknown Film';
+      window.trackEvent('film_card_click', { film_title: title });
+    }
+  });
+});
+
+// Track WhatsApp Clicks
+document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp.com"]').forEach(link => {
+  link.addEventListener('click', function() {
+    if (typeof window.trackEvent === 'function') {
+      window.trackEvent('whatsapp_click', { destination: this.href });
+    }
+  });
+});
+
+// Track Questionnaire Submit (Override existing logic if needed)
+const questionnaireForm = document.getElementById('questionnaire-form');
+if (questionnaireForm) {
+  questionnaireForm.addEventListener('submit', function(e) {
+    // Delay slightly to ensure data is captured before potential redirect
+    setTimeout(() => {
+      if (typeof window.trackQuestionnaireSubmit === 'function') {
+        window.trackQuestionnaireSubmit();
+      }
+    }, 100);
+  });
+}
